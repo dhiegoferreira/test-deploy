@@ -8,7 +8,6 @@ app.use(cors())
 app.use(express.json()) //json-parser
 app.use(express.static('dist'))
 
-
 //Mock
 let notes = [
     {
@@ -27,6 +26,18 @@ let notes = [
         important: true
     },
 ]
+
+
+
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+  }
+
+app.use(requestLogger)
 
 
 //To test endpoint
@@ -118,6 +129,12 @@ app.put('/api/notes/:id', (request, response) => {
 
 })
 
+
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(unknownEndpoint)
 
 
 const PORT = 3001
