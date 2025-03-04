@@ -102,11 +102,12 @@ app.post('/api/notes', (request, response, next) => {
 })
 
 
-app.put('/api/notes/:id', (request, response) => {
+app.put('/api/notes/:id', (request, response, next) => {
 
+    
     const { content, important } = request.body
 
-
+    console.log(content)
 
     Note.findByIdAndUpdate(
         request.params.id,
